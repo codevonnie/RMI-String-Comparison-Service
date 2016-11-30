@@ -1,12 +1,18 @@
 package ie.gmit.sw;
 
 import java.io.*;
+import java.rmi.Naming;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
+	
 	private String remoteHost = null;
 	private static long jobNumber = 0;
+	private static BlockingQueue<Runnable> inQueue = new LinkedBlockingQueue<Runnable>();
 
 	public void init() throws ServletException {
 		ServletContext ctx = getServletContext();
@@ -14,6 +20,10 @@ public class ServiceHandler extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		//*********will have error until in the same package!*********
+		StringService ss = (StringService) Naming.lookup("rmi://localhost:1099/algoService");
+		
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
 		
@@ -32,6 +42,9 @@ public class ServiceHandler extends HttpServlet {
 			taskNumber = new String("T" + jobNumber);
 			jobNumber++;
 			//Add job to in-queue
+			Requester re = new Requester(s, t, taskNumber, algorithm);
+			
+			
 		}else{
 			//Check out-queue for finished job
 		}
