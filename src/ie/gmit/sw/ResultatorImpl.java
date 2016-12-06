@@ -8,16 +8,25 @@ public class ResultatorImpl extends UnicastRemoteObject implements Resultator
 	private static final long serialVersionUID = 1L;
 	private String result;
 	private boolean process;
+	private String s;
+	private String t;
 	
 	public ResultatorImpl() throws RemoteException
 	{
 		super();
 	}
+	
+	public ResultatorImpl(String s, String t) throws RemoteException
+	{
+		super();
+		this.s= s;
+		this.t=t;
+	}
 
 	
 	public String getResult() throws RemoteException
 	{
-		return result;
+		return "stuff";
 	}
 
 	public void setResult(String result) throws RemoteException
@@ -34,8 +43,7 @@ public class ResultatorImpl extends UnicastRemoteObject implements Resultator
 
 	public void setProcessed() throws RemoteException
 	{
-		// TODO Auto-generated method stub
-		
+		this.process=true;
 	}
 	
 }

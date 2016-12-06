@@ -2,6 +2,7 @@ package ie.gmit.sw;
 
 import java.io.*;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -10,9 +11,13 @@ import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
 	
+
+	private static final long serialVersionUID = 1999014881232779918L;
 	private String remoteHost = null;
 	private static long jobNumber = 0;
-	private static BlockingQueue<Runnable> inQueue = new LinkedBlockingQueue<Runnable>();
+	private static BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();
+	public static Worker worker = new Worker(queue);
+	Resultator result;
 
 	public void init() throws ServletException {
 		ServletContext ctx = getServletContext();
@@ -21,8 +26,15 @@ public class ServiceHandler extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//*********will have error until in the same package!*********
-		StringService ss = (StringService) Naming.lookup("rmi://localhost:1099/algoService");
+		StringService ss = null;
+		try
+		{
+			ss = (StringService) Naming.lookup("rmi://localhost:1094/algoService");
+		} catch (NotBoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
@@ -41,12 +53,19 @@ public class ServiceHandler extends HttpServlet {
 		if (taskNumber == null){
 			taskNumber = new String("T" + jobNumber);
 			jobNumber++;
-			//Add job to in-queue
-			Requester re = new Requester(s, t, taskNumber, algorithm);
+
+			//Requester re = new Requester(s, t, taskNumber, algorithm);
+			//queue.put(re);
+			Resultator result = ss.compare(s, t, algorithm);
+			System.out.println(result.getResult());
+			
+			
+
+			System.out.println("");
 			
 			
 		}else{
-			//Check out-queue for finished job
+			//Check out-queue for isProcessed then out.print distance
 		}
 		
 		
@@ -65,14 +84,18 @@ public class ServiceHandler extends HttpServlet {
 
 		out.print("<P> Next Steps:");	
 		out.print("<OL>");
-		out.print("<LI>Generate a big random number to use a a job number, or just increment a static long variable declared at a class level, e.g. jobNumber.");	
+		out.print("<LI>Generate a big random number to use a a job number, or just increment a static long variable declared at a class level, e.g. jobNumber.");
+		out.print("<LI>What a load of old bollox");
 		out.print("<LI>Create some type of an object from the request variables and jobNumber.");	
-		out.print("<LI>Add the message request object to a LinkedList or BlockingQueue (the IN-queue)");			
-	//	out.print("<LI>Return the jobNumber to the client web browser with a wait interval using <meta http-equiv=\"refresh\" content=\"10\">. The content=\"10\" will wait for 10s.");	
+		out.print("<LI>Add the message request object to a LinkedList or BlockingQueue (the IN-queue)");
+		out.print("<LI>Seriously though it's awful bollox");
+		out.print("<LI>Return the jobNumber to the client web browser with a wait interval using <meta http-equiv=\"refresh\" content=\"10\">. The content=\"10\" will wait for 10s.");
+		out.print("<LI>Even more bollox");
 		out.print("<LI>Have some process check the LinkedList or BlockingQueue for message requests.");	
 		out.print("<LI>Poll a message request from the front of the queue and make an RMI call to the String Comparison Service.");			
 		out.print("<LI>Get the <i>Resultator</i> (a stub that is returned IMMEDIATELY by the remote method) and add it to a Map (the OUT-queue) using the jobNumber as the key and the <i>Resultator</i> as a value.");	
-		out.print("<LI>Return the result of the string comparison to the client next time a request for the jobNumber is received and the <i>Resultator</i> returns true for the method <i>isComplete().</i>");	
+		out.print("<LI>Return the result of the string comparison to the client next time a request for the jobNumber is received and the <i>Resultator</i> returns true for the method <i>isComplete().</i>");
+		out.print("<LI>I quit!");
 		out.print("</OL>");	
 		
 		out.print("<form name=\"frmRequestDetails\">");

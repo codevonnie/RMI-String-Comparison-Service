@@ -11,7 +11,7 @@ public class Requester
 	public Requester(String firstString, String secondString, String taskNo, String algorithm){
 		this.firstString=firstString;
 		this.secondString=secondString;
-		this.setTaskNo(taskNo);
+		//this.setTaskNo(taskNo);
 		this.setAlgorithm(algorithm);
 	}
 	
