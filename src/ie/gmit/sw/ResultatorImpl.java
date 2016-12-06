@@ -13,12 +13,11 @@ public class ResultatorImpl extends UnicastRemoteObject implements Resultator
 	
 	public ResultatorImpl() throws RemoteException
 	{
-		super();
+		
 	}
 	
 	public ResultatorImpl(String s, String t) throws RemoteException
 	{
-		super();
 		this.s= s;
 		this.t=t;
 	}
@@ -26,7 +25,7 @@ public class ResultatorImpl extends UnicastRemoteObject implements Resultator
 	
 	public String getResult() throws RemoteException
 	{
-		return "stuff";
+		return result;
 	}
 
 	public void setResult(String result) throws RemoteException

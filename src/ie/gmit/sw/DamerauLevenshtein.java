@@ -1,7 +1,7 @@
 package ie.gmit.sw;
 
 public class DamerauLevenshtein implements Algos {
-    public int distance(String s, String t) {
+    public String distance(String s, String t) {
         int[][] distance = new int[s.length() + 1][t.length() + 1];
         for (int i = 0; i <= s.length(); i++) distance[i][0] = i;
         for (int j = 0; j <= t.length(); j++) distance[0][j] = j;
@@ -16,7 +16,7 @@ public class DamerauLevenshtein implements Algos {
             }
     
         }
-        return distance[s.length()][t.length()];
+        return Integer.toString(distance[s.length()][t.length()]);
     }
    /* 
     public static void main(String[] args) {

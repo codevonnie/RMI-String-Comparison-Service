@@ -3,6 +3,8 @@ package ie.gmit.sw;
 import java.io.*;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -12,10 +14,11 @@ import javax.servlet.http.*;
 public class ServiceHandler extends HttpServlet {
 	
 
-	private static final long serialVersionUID = 1999014881232779918L;
+	private static final long serialVersionUID = 1L;
 	private String remoteHost = null;
 	private static long jobNumber = 0;
 	private static BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();
+	private static Map<String, Resultator> outQueue = new HashMap<String, Resultator>();
 	public static Worker worker = new Worker(queue);
 	Resultator result;
 
@@ -29,7 +32,7 @@ public class ServiceHandler extends HttpServlet {
 		StringService ss = null;
 		try
 		{
-			ss = (StringService) Naming.lookup("rmi://localhost:1094/algoService");
+			ss = (StringService) Naming.lookup("rmi://127.0.0.1:1099/StringCompService");
 		} catch (NotBoundException e)
 		{
 			// TODO Auto-generated catch block
@@ -55,8 +58,10 @@ public class ServiceHandler extends HttpServlet {
 			jobNumber++;
 
 			//Requester re = new Requester(s, t, taskNumber, algorithm);
-			//queue.put(re);
+
 			Resultator result = ss.compare(s, t, algorithm);
+			//outQueue.put(taskNumber, result);
+			
 			System.out.println(result.getResult());
 			
 			

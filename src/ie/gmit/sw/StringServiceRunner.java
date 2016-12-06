@@ -13,7 +13,7 @@ public class StringServiceRunner
 		LocateRegistry.createRegistry(1099);
 		
 		//Bind our remote object to the registry
-		Naming.rebind("algoService", ss);
+		Naming.rebind("StringCompService", ss);
 		
 		System.out.println("Server ready");
 

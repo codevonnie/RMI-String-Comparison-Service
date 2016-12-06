@@ -5,7 +5,8 @@ import java.rmi.server.*;
 
 public class StringServiceImpl extends UnicastRemoteObject implements StringService
 {
-	private static final long serialVersionUID = 269913374743865561L;
+	private static final long serialVersionUID = 1L;
+
 
 	public StringServiceImpl() throws RemoteException
 	{
@@ -18,24 +19,51 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
 		Algos algos = null;
 		switch (algo) {
 		case "Damerau-Levenshtein Distance":
-			algos= new DamerauLevenshtein();
-			
+			algos = new DamerauLevenshtein();
+			break;
+
+		case "Euclidean Distance":
+			algos = new Levenshtein();
 			break;
 
 		case "Levenshtein":
 			algos = new Levenshtein();
 			break;
-		
-		
-		case "HammingDistance":
+
+		case "Hamming Distance":
 			algos = new HammingDistance();
+			break;
+
+		case "	Hirschberg's Algorithm":
+			algos = new Levenshtein();
+			break;
+
+		case "JaroâWinkler Distance":
+			algos = new Levenshtein();
+			break;
+
+		case "Levenshtein Distance":
+			algos = new Levenshtein();
+			break;
+
+		case "	Needleman-Wunsch":
+			algos = new Levenshtein();
+			break;
+
+		case "Smith Waterman":
+			algos = new Levenshtein();
+			break;
+
+		default:
+			algos = new Levenshtein();
 			break;
 		}
 		
 		
-		Resultator rs = new ResultatorImpl(s,t);
-		algos.distance(s, t);
-
+		Resultator rs = new ResultatorImpl();
+		rs.setResult(algos.distance(s, t));
+		//algos.distance(s, t);
+		
 		return rs;
 	}
 
