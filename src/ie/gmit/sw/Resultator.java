@@ -1,5 +1,12 @@
 package ie.gmit.sw;
 
+/**
+ * Remote interface which exposes 4 remote methods
+ * 
+ * 
+ * @author Yvonne Grealy
+ */
+
 import java.rmi.*;
 
 public interface Resultator extends Remote

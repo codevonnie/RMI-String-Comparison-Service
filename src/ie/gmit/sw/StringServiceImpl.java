@@ -1,5 +1,13 @@
 package ie.gmit.sw;
 
+/**
+ * StringServiceImpl class which implements StringService interface and overrides the compare
+ * method.  Incoming request is checked for which algorithm has been chosen, starts a thread to
+ * start the processing of the request and immediately returns a Resultator to the requester.
+ * 
+ * @author Yvonne Grealy
+ */
+
 import java.rmi.*;
 import java.rmi.server.*;
 
@@ -16,41 +24,19 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
 	public Resultator compare(String s, String t, String algo)
 			throws RemoteException
 	{
+		//create an instance of the Algos object
 		Algos algos = null;
+		//switch to determine which algorithm has been chosen in the GUI and sets the appropriate agorithm instance
 		switch (algo) {
 		case "Damerau-Levenshtein Distance":
 			algos = new DamerauLevenshtein();
-			break;
-
-		case "Euclidean Distance":
-			algos = new Levenshtein();
-			break;
-
-		case "Levenshtein":
-			algos = new Levenshtein();
 			break;
 
 		case "Hamming Distance":
 			algos = new HammingDistance();
 			break;
 
-		case "	Hirschberg's Algorithm":
-			algos = new Levenshtein();
-			break;
-
-		case "JaroâWinkler Distance":
-			algos = new Levenshtein();
-			break;
-
 		case "Levenshtein Distance":
-			algos = new Levenshtein();
-			break;
-
-		case "	Needleman-Wunsch":
-			algos = new Levenshtein();
-			break;
-
-		case "Smith Waterman":
 			algos = new Levenshtein();
 			break;
 
@@ -59,11 +45,14 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
 			break;
 		}
 		
-		
+		//create new Resultator object
 		Resultator rs = new ResultatorImpl();
-		rs.setResult(algos.distance(s, t));
-		//algos.distance(s, t);
 		
+		//new thread of type Worker which takes the resultator, the two strings for comparison and the chosen algorithm object
+		Thread thread = new Thread(new StringWorker(rs, s, t, algos));
+		//start thread
+		thread.start();
+		//return empty Resultator to requester
 		return rs;
 	}
 
