@@ -1,34 +1,43 @@
 package ie.gmit.sw;
 
+/**
+ * Requester object which contains the input from the webapp i.e. two Strings for comparison, the chosen algorithm as well as
+ * the allocated taskNumber.  
+ * 
+ * @author Yvonne Grealy
+ *
+ */
+
 public class Requester
 {
-	private String firstString;
-	private String secondString;
+	private String s;
+	private String t;
 	private String taskNo;
 	private String algorithm;
 	
-	
-	public Requester(String firstString, String secondString, String taskNo, String algorithm){
-		this.firstString=firstString;
-		this.secondString=secondString;
-		//this.setTaskNo(taskNo);
+	//constructor takes in 4 Strings
+	public Requester(String s, String t, String taskNo, String algorithm){
+		this.s=s;
+		this.t=t;
+		this.setTaskNo(taskNo);
 		this.setAlgorithm(algorithm);
 	}
 	
+	//Getters and setters for Strings
 	public String getString1(){
-		return this.firstString;
+		return this.s;
 	}
 	
-	public void setString1(String firstString){
-		this.firstString=firstString;
+	public void setString1(String s){
+		this.s=s;
 	}
 	
 	public String getString2(){
-		return this.secondString;
+		return this.t;
 	}
 	
-	public void setString2(String secondString){
-		this.secondString=secondString;
+	public void setString2(String t){
+		this.t=t;
 	}
 	
 	public String getTaskNo(){

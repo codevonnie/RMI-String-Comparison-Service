@@ -1,5 +1,12 @@
 package ie.gmit.sw;
 
+/**
+ * Algorithm that implements Algos interface and overrides the distance method.  Result is cast from Integer to String
+ * 
+ * @author Yvonne Grealy
+ *
+ */
+
 public class Levenshtein implements Algos {
     public String distance(String s, String t) {
         int[][] distance = new int[s.length() + 1][t.length() + 1];
@@ -14,15 +21,5 @@ public class Levenshtein implements Algos {
         }
         return Integer.toString(distance[s.length()][t.length()]);
     }
-    /*
-    public static void main(String[] args) {
-    	Levenshtein algo = new Levenshtein();
-    	System.out.println(algo.distance("Distributed Systems", "Disturbed Systems"));
-    	System.out.println(algo.distance("Distributed Systems", "Distressed Sausages"));
-    	System.out.println(algo.distance("Distributed Systems", "Distasteful Sisters"));
-    	System.out.println(algo.distance("Distributed Systems", "Distended Cisterns"));
-    	System.out.println(algo.distance("Distributed Systems", "Distempered Sisyphus"));
-    	System.out.println(algo.distance("Distributed Systems", "Distilled Cistercians"));
-	}
-	*/
+    
 }

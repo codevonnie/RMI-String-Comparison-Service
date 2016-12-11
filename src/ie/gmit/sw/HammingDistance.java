@@ -1,5 +1,12 @@
 package ie.gmit.sw;
 
+/**
+ * Algorithm that implements Algos interface and overrides the distance method.  Result is cast from Integer to String
+ * 
+ * @author Yvonne Grealy
+ *
+ */
+
 public class HammingDistance implements Algos {
 	public String distance(String s, String t) {
 		if (s.length() != t.length()) return Integer.toString(-1); //Similar length strings only
@@ -10,15 +17,5 @@ public class HammingDistance implements Algos {
 		}
 		return Integer.toString(counter);
 	}
-	/*
-    public static void main(String[] args) {
-    	HammingDistance algo = new HammingDistance();
-    	System.out.println(algo.distance("Distributed Systems", "Disturbed Systems"));
-    	System.out.println(algo.distance("Distributed Systems", "Distressed Sausages"));
-    	System.out.println(algo.distance("Distributed Systems", "Distasteful Sisters"));
-    	System.out.println(algo.distance("Distributed Systems", "Distended Cisterns"));
-    	System.out.println(algo.distance("Distributed Systems", "Distempered Sisyphus"));
-    	System.out.println(algo.distance("Distributed Systems", "Distilled Cistercians"));
-	}	
-	*/
+
 }
